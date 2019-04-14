@@ -2,14 +2,13 @@ package AnalisadorLexico;
 
 import static AnalisadorLexico.Token.*;
 
-%% 
+%%                    /* Contém as delacarações globais*/
 %class GameController
 %type Token
 
-L = [a-zA-Z_]
-D = [0-9]
-T = [^"L+"$]
-X=[\n]
+L = [a-zA-Z_óâã]
+D = [0-9]               /* Conjunto de digitos numericos*/
+
 WHITE=[ \t\r]
 %{
 public String lexeme;
@@ -17,40 +16,43 @@ public String lexeme;
 %%
 {WHITE} {/*Ignore*/}
 
+                        /* Contém as regras do analisador Lexico*/
+("=")  {lexeme = yytext(); return ATRIB;} 
+("(")  {lexeme = yytext(); return OPP;}                                      /* Abre parênteses*/
+(")")  {lexeme = yytext(); return CLP;}                                      /* Fecha parênteses*/
+("\n") {lexeme = yytext(); return BR;}                                       /* Pula linha*/
+("{") {lexeme = yytext(); return OPK;}                                       /* Abre chaves*/
+("}") {lexeme = yytext(); return CLK;}                                       /* Fecha chaves*/
+("[") {lexeme = yytext(); return OPC;}                                       /* Abre colchetes*/
+("]") {lexeme = yytext(); return CLC;}                                       /* Fecha colchetes*/
+(";") {lexeme = yytext(); return END;}                                       /* Final de linha*/
+("\"") {lexeme = yytext(); return ASP;}                                      /* Aspas*/
+(":") {lexeme = yytext(); return DOISP;}                                     /* Dois pontos*/
+("string") {lexeme = yytext(); return STR;}                                  /* Conjunto de carateres*/
+("float") {lexeme = yytext(); return PF;}                                    /* Ponto flutuante*/
+("double") {lexeme = yytext(); return PFD;}                                  /* Double*/
+("int") {lexeme = yytext(); return INT;}                                     /* Inteiro*/
+("char") {lexeme = yytext(); return CH;}                                     /* Char*/
+(">=" | "<=" |"==" |"!=" |"<" | ">") {lexeme = yytext(); return OPRELAC;}    /* Operadores Relacionais*/
+("+" | "-" | "/" | "*") {lexeme = yytext(); return OPARIT;}                  /* Operadores Aritméticos*/
+("||" | "!" | "&&") {lexeme = yytext(); return OPLOG;}                       /* Operadores Lógicos*/
+("true" | "false") {lexeme = yytext(); return OPBOL;}                        /* Operadores Boleanos*/
+("for") {lexeme = yytext(); return REPETE;}                                  /* Laço de repetição*/
+("break") {lexeme = yytext(); return STOP;}                                  /* Pausa de execução*/
+("/*") {lexeme = yytext(); return IBC;}                                      /* Início de bloco de comentário*/
+("*/") {lexeme = yytext(); return FBC;}                                      /* Final de bloco de comentário*/
+("//") {lexeme = yytext(); return COMENT;}                                   /* Comentário*/
+("--" | "++") {lexeme = yytext(); return OPER;}                              /* Decremento e Incremento*/
+("func") {lexeme = yytext(); return FUNC;}                                   /* Definição de função*/
+("printf") {lexeme = yytext(); return IMPRIMI;}                              /* Exibe uma mensagem*/
+("switch") {lexeme = yytext(); return SW;}                                   /* Cotrola acao*/
+("case") {lexeme = yytext(); return CASO;}                                   /*Case */
+("inicio") {lexeme = yytext(); return INICIO;}                               /* Inicio do algoritmo*/
+("for") {lexeme = yytext(); return FOR;}                                     /* Estrutura de repeticao*/
+("if") {lexeme = yytext(); return IF;}                                       /* Estrutura condicional*/
+("else") {lexeme = yytext(); return ELSE;}                                   /* Estrutura senão*/
 
+{L}({L}|{D})* {lexeme = yytext(); return PALAVRA;}
+{D}+ {lexeme = yytext(); return NUM;}
 
-("=")    {lexeme = yytext(); return ATRIB;} 
-
-
-(OPP)      {lexeme = yytext(); return OPP;} 
-(CLP)      {lexeme = yytext(); return CLP;} 
-(BR)         {lexeme = yytext(); return BR;} 
-
-
-(OPK) {lexeme = yytext(); return OPK;}             
-(CLK) {lexeme = yytext(); return CLK;}              /* Fecha chaves*/
-(OPC) {lexeme = yytext(); return OPC;}              /* Abre colchetes*/
-(CLC) {lexeme = yytext(); return CLC;}              /* Fecha colchetes*/
-(END) {lexeme = yytext(); return END;}              /* Final de linha*/
-(STR) {lexeme = yytext(); return STR;}              /* Conjunto de carateres*/
-(PF) {lexeme = yytext(); return PF;}                /* Ponto flutuante*/
-(PFD) {lexeme = yytext(); return PFD;}              /* Double*/
-(INT) {lexeme = yytext(); return INT;}              /* Inteiro*/
-(CH) {lexeme = yytext(); return CH;}                /* Char*/
-(OPERLAC) {lexeme = yytext(); return OPERLAC;}      /* Operadores Relacionais*/
-(OPARIT) {lexeme = yytext(); return OPARIT;}        /* Operadores Aritméticos*/
-(OPLOG) {lexeme = yytext(); return OPLOG;}          /* Operadores Lógicos*/
-(OPBOL) {lexeme = yytext(); return OPBOL;}          /* Operadores Boleanos*/
-(REPETE) {lexeme = yytext(); return REPETE;}        /* Laço de repetição*/
-(STOP) {lexeme = yytext(); return STOP;}            /* Pausa de execução*/
-(IBC) {lexeme = yytext(); return IBC;}              /* Início de bloco de comentário*/
-(FBC) {lexeme = yytext(); return FBC;}              /* Final de bloco de comentário*/
-(COMENT) {lexeme = yytext(); return COMENT;}        /* Comentário*/
-(OPER) {lexeme = yytext(); return OPER;}            /* Decremento e Incremento*/
-("FUNC") {lexeme = yytext(); return FUNC;}          /* Definição de função*/
-("IMPRIMI") {lexeme = yytext(); return IMPRIMI;}    /* Exibe uma mensagem*/
-("ERROR") {lexeme = yytext(); return ERROR;}    /* Erro! Token não reconhecido.*/
-([0-9]+) {lexeme = yytext(); return NUM;}           /* Números*/
-("\""[^\"][a-zA-Z0-9]*\.*[a-z]*"\"") {lexeme = yytext(); return PARAM;}
-/*({D}({L})+ {lexeme=yytext(); return ER;}*/
-. {return ER;}
+. {return ERROR;}

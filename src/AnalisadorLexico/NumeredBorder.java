@@ -1,4 +1,3 @@
-
 package AnalisadorLexico;
 
 import java.awt.Color;
@@ -55,11 +54,9 @@ public class NumeredBorder extends AbstractBorder {
 			lenght = maxLenght - lenght;
 			py = this.lineHeight * i + 14;
 			px = this.characterWidth * lenght + 2;
-			//px += point.x;
 			g.drawString(str, px, py);
 		}		
 		int left = this.calculateLeft(height) + 7;
-		//left += point.x;
 		g.drawLine(left, 0, left, height);
         g.setColor(oldColor);
 	}

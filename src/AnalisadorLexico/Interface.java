@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package AnalisadorLexico;
 
 import java.io.File;
@@ -14,23 +9,15 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
-/**
- *
- * @author HigorLeandro
- */
+
 public class Interface extends javax.swing.JFrame {
-    int var = 0;  /**
-     * Creates new form Inteface
-     */
+    int var = 0;
     
     public javax.swing.JTextArea jText;
     File file;
     int num_linha=1; 
       public void executar()throws Exception{
-        
-      
-       
-       
+
        jText = jTextArea1;
        String expr;
        expr = (String)jText.getText();
@@ -39,12 +26,8 @@ public class Interface extends javax.swing.JFrame {
        
        String resultado="";
        
-       
-       
        while(true){
-           Token token = lexer.yylex(); 
-      
-                   
+           Token token = lexer.yylex();   
            if(token == null){
               
                 jTextArea2.setText(resultado);
@@ -58,101 +41,119 @@ public class Interface extends javax.swing.JFrame {
                switch(token){
                    
                 case OPP:
-                    resultado = resultado + "Linha: "+num_linha + ":" + "<Abre parênteses> "+ lexer.lexeme + "\n";
+                    resultado = resultado + "Linha: "+num_linha + ":" + "<OPP> "+ lexer.lexeme + "\n";
                     break;
                 case CLP:
-                    
-                    resultado = resultado + "Linha: "+ num_linha + ":" + "<Fecha parênteses>"+ lexer.lexeme + "\n";
+                    resultado = resultado + "Linha: "+ num_linha + ":" + "<CLP>"+ lexer.lexeme + "\n";
                     break;
-                 case BR:
-                     
+                 case BR: 
                     num_linha++;
                     break;
                 case OPK:
-                    resultado = resultado + "Linha: " + num_linha + ":" + "<Abre chaves>"+ lexer.lexeme + "\n";
+                    resultado = resultado + "Linha: " + num_linha + ":" + "<OPK>"+ lexer.lexeme + "\n";
                     break;
                 case CLK:
-                    resultado = resultado +"Linha: " + num_linha + ":" + "<Fecha chaves>" + lexer.lexeme + "\n";
+                    resultado = resultado +"Linha: " + num_linha + ":" + "<CLK>" + lexer.lexeme + "\n";
                     break;
                 case OPC:
-                    resultado = resultado + "Linha: " + num_linha + ":" + "<Abre colchetes>"+ lexer.lexeme + "\n";
+                    resultado = resultado + "Linha: " + num_linha + ":" + "<OPC>"+ lexer.lexeme + "\n";
                     break;
                 case CLC:
-                    resultado = resultado +"Linha: " + num_linha + ":" + "<Fecha colchetes>" + lexer.lexeme + "\n";
+                    resultado = resultado +"Linha: " + num_linha + ":" + "<CLC>" + lexer.lexeme + "\n";
                     break;
                 case END:
-                    resultado = resultado + "Linha: " + num_linha + ":" + "<Final de linha>" + lexer.lexeme + "\n";
+                    resultado = resultado + "Linha: " + num_linha + ":" + "<END>" + lexer.lexeme + "\n";
                     break;
                 case STR:
-                    resultado = resultado + "Linha: " + num_linha + ":" + "<Conjunto de carateres> "+ lexer.lexeme + "\n";
+                    resultado = resultado + "Linha: " + num_linha + ":" + "<STR> "+ lexer.lexeme + "\n";
                     break;
                 case PF:
-                    resultado = resultado + "Linha: " +num_linha + ":" + " <Ponto flutuante>" + lexer.lexeme + "\n";
+                    resultado = resultado + "Linha: " +num_linha + ":" + " <PF>" + lexer.lexeme + "\n";
                     break;
                 case PFD:
-                    resultado = resultado + "Linha: " +num_linha + ":" + "<Double>" + lexer.lexeme +"\n";
+                    resultado = resultado + "Linha: " +num_linha + ":" + "<PFD>" + lexer.lexeme +"\n";
                     break;
                 case INT:
-                    resultado = resultado +"Linha: " + num_linha + ":" + "<Inteiro>" + lexer.lexeme + "\n";
+                    resultado = resultado +"Linha: " + num_linha + ":" + "<INT>" + lexer.lexeme + "\n";
                     break;
                 case CH:
-                    resultado = resultado + "Linha: " +num_linha + ":" + "<Char>" + lexer.lexeme + "\n";
+                    resultado = resultado + "Linha: " +num_linha + ":" + "<CH>" + lexer.lexeme + "\n";
                     break;
-                case OPERLAC:
-                    resultado = resultado + num_linha + ":" + "<Operadores Relacionais>" + lexer.lexeme + "\n";
+                case OPRELAC:
+                    resultado = resultado + "Linha: "+ num_linha + ":" + "<OPRELAC>" + lexer.lexeme + "\n";
                     break;
                 case OPARIT:
-                    resultado = resultado +"Linha: " + num_linha + "<Operadores Aritméticos>" + lexer.lexeme + "\n";
+                    resultado = resultado +"Linha: " + num_linha + "<OPARIT>" + lexer.lexeme + "\n";
                     break;
                 case OPLOG:
-                    resultado = resultado + "Linha: " +num_linha + ":" + "<Operadores Lógicos>" + lexer.lexeme +">"+ "\n";
+                    resultado = resultado + "Linha: " +num_linha + ":" + "<OPLOG>" + lexer.lexeme +">"+ "\n";
                     break;
                 case OPBOL:
-                    resultado = resultado + "Linha: " +num_linha + ":" + "<Operadores Boleanos> " + lexer.lexeme +"\n";
+                    resultado = resultado + "Linha: " +num_linha + ":" + "<OPBOL> " + lexer.lexeme +"\n";
                     break;
                 case REPETE:
-                    resultado = resultado + "Linha: " +num_linha + ":" + "<Laço de repetição> " + lexer.lexeme +"\n";
+                    resultado = resultado + "Linha: " +num_linha + ":" + "<REPETE> " + lexer.lexeme +"\n";
                     break;
                 case STOP:
-                    resultado = resultado + "Linha: " +num_linha + ":" + " <Pausa de execução>" + lexer.lexeme +"\n";
+                    resultado = resultado + "Linha: " +num_linha + ":" + " <STOP>" + lexer.lexeme +"\n";
                     break;
                 case IBC:
-                    resultado = resultado + "Linha: " +num_linha + ":" + "<Início de bloco de comentário>"+ lexer.lexeme +"\n";
+                    resultado = resultado + "Linha: " +num_linha + ":" + "<IBC>"+ lexer.lexeme +"\n";
                     break;
                 case FBC:
-                    resultado = resultado + "Linha: " +num_linha + "-" + "<Final de bloco de comentário>" + lexer.lexeme + "\n";
+                    resultado = resultado + "Linha: " +num_linha + "-" + "<FBC>" + lexer.lexeme + "\n";
                     break;
                 case COMENT:
-                    resultado = resultado + "Linha: " +num_linha + "-" + "<Comentário> " + lexer.lexeme + "\n";
+                    resultado = resultado + "Linha: " +num_linha + "-" + "<COMENT> " + lexer.lexeme + "\n";
                     break;
                 case OPER:
-                    resultado = resultado +"Linha: " + num_linha + "-" + "< Decremento eIncremento>" + lexer.lexeme + "\n";
+                    resultado = resultado +"Linha: " + num_linha + "-" + "< OPER>" + lexer.lexeme + "\n";
                     break;
                 case NUM:
-                    resultado = resultado + "Linha: " +num_linha + "-" + "<Número> " + lexer.lexeme + "\n";
+                    resultado = resultado + "Linha: " +num_linha + "-" + "<NUM> " + lexer.lexeme + "\n";
                     break;
-                case PARAM:
-                    resultado = resultado + "Linha: " +num_linha + "-" + "<Parametro> " + lexer.lexeme + "\n";
+                case PALAVRA:
+                    resultado = resultado + "Linha: " +num_linha + "-" + "<PALAVRA> " + lexer.lexeme + "\n";
                     break;
                 case ATRIB:
-                    resultado = resultado +"Linha: " + num_linha + "-" + "<Atribuição>" + lexer.lexeme + "\n";
+                    resultado = resultado +"Linha: " + num_linha + "-" + "<ATRIB>" + lexer.lexeme + "\n";
+                    break;   
+                case INICIO:
+                    resultado = resultado + "Linha: " +num_linha + "-" + "<INICIO> " + lexer.lexeme + "\n";
+                    break;  
+                 case SW:
+                    resultado = resultado + "Linha: " +num_linha + "-" + "<SW> " + lexer.lexeme + "\n";
+                    break;  
+                 case CASO:
+                    resultado = resultado + "Linha: " +num_linha + "-" + "<CASO> " + lexer.lexeme + "\n";
+                    break;  
+                  case DOISP:
+                    resultado = resultado + "Linha: " +num_linha + "-" + "<DOISP> " + lexer.lexeme + "\n";
+                    break; 
+                  case ASP:
+                    resultado = resultado + "Linha: " +num_linha + "-" + "<ASP> " + lexer.lexeme + "\n";
+                    break; 
+                  case FUNC:
+                    resultado = resultado + "Linha: " +num_linha + "-" + "<FUNC> " + lexer.lexeme + "\n";
                     break;
-                case ID:
-                    resultado = resultado + "Linha: " +num_linha + "-" + "<Identificador> " + lexer.lexeme + "\n";
-                    break;              
+                  case IF:
+                    resultado = resultado + "Linha: " +num_linha + "-" + "<IF> " + lexer.lexeme + "\n";
+                    break;
+                  case ELSE:
+                    resultado = resultado + "Linha: " +num_linha + "-" + "<ELSE> " + lexer.lexeme + "\n";
+                    break;
+                  case IMPRIMI:
+                    resultado = resultado + "Linha: " +num_linha + "-" + "<IMPRIMI> " + lexer.lexeme + "\n";
+                    break;
                  case ERROR:
-                    resultado = resultado + "Linha: " +num_linha + "-" + "Erro! Token não reconhecido." + lexer.lexeme + "\n";
+                    resultado = resultado + "Linha: " +num_linha + "-" + "Erro! Token não reconhecido." + lexer.yytext() + "\n";
                     break;
            
            }
            }       
         }
     }
-    
-
-    /**
-     * Creates new form Interface
-     */
+      
     public Interface() {
         initComponents();
         setDefaultCloseOperation(javax.swing.WindowConstants.HIDE_ON_CLOSE);
@@ -214,13 +215,15 @@ public class Interface extends javax.swing.JFrame {
         jTextArea2.setRows(5);
         jScrollPane2.setViewportView(jTextArea2);
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Comic Sans MS", 0, 24)); // NOI18N
         jLabel1.setText("Código Fonte ");
 
-        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Comic Sans MS", 0, 24)); // NOI18N
         jLabel2.setText("Análise Léxica");
 
-        botao.setIcon(new javax.swing.ImageIcon(getClass().getResource("/AnaliseLexicaImagens/icon-play-128.png"))); // NOI18N
+        botao.setBackground(new java.awt.Color(255, 255, 255));
+        botao.setFont(new java.awt.Font("Comic Sans MS", 0, 11)); // NOI18N
+        botao.setIcon(new javax.swing.ImageIcon("C:\\Users\\Fabiana\\Documents\\NetBeansProjects\\Compilador\\src\\AnaliseLexicaImagens\\media_play_green.png")); // NOI18N
         botao.setText("Analisar");
         botao.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -228,7 +231,9 @@ public class Interface extends javax.swing.JFrame {
             }
         });
 
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/AnaliseLexicaImagens/Limpar.png"))); // NOI18N
+        jButton1.setBackground(new java.awt.Color(255, 255, 255));
+        jButton1.setFont(new java.awt.Font("Comic Sans MS", 0, 11)); // NOI18N
+        jButton1.setIcon(new javax.swing.ImageIcon("C:\\Users\\Fabiana\\Documents\\NetBeansProjects\\Compilador\\src\\AnaliseLexicaImagens\\brush3.png")); // NOI18N
         jButton1.setText("Limpar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -241,42 +246,42 @@ public class Interface extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(12, 12, 12)
+                .addGap(99, 99, 99)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(249, 249, 249)
+                .addComponent(jLabel2)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(6, 6, 6)
-                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addComponent(jScrollPane1)
-                            .addComponent(jScrollPane2))
-                        .addGap(49, 49, 49))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(botao, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(64, 64, 64)
+                        .addComponent(botao, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(547, 547, 547))))
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 396, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 387, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(377, 377, 377))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel2)
-                .addGap(8, 8, 8)
-                .addComponent(jScrollPane2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(botao)
-                    .addComponent(jButton1))
-                .addContainerGap())
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 511, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(botao, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(24, Short.MAX_VALUE))
         );
 
         jMenu6.setText("Arquivo");
@@ -307,36 +312,33 @@ public class Interface extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 846, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 10, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
         JFileChooser fileChooser = new JFileChooser();
         int returnVal = fileChooser.showOpenDialog(this);
         if (returnVal == JFileChooser.APPROVE_OPTION) {
             file = fileChooser.getSelectedFile();
             try {
-              // What to do with the file, e.g. display it in a TextArea
               jTextArea1.read( new FileReader( file.getAbsolutePath() ), null ); 
                jTextArea2.setText("");
             } catch (IOException ex) {
               JOptionPane.showMessageDialog(null, "Problema ao acessar o arquivo: "+file.getAbsolutePath(), "Erro", JOptionPane.ERROR_MESSAGE); 
-              //System.out.println("problem accessing file"+file.getAbsolutePath());
             }
         } else {
-            //System.out.println("File access cancelled by user.");
         }
      
     }//GEN-LAST:event_jMenuItem2ActionPerformed
@@ -356,9 +358,7 @@ public class Interface extends javax.swing.JFrame {
 
     private void botaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoActionPerformed
 
-        // TODO add your handling code here:
         try{
-            //System.out.println("passou");
             executar();
             var = 0;
             num_linha=1;
