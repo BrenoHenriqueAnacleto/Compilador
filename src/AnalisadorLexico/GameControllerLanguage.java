@@ -1,8 +1,3 @@
-/*
- *
- * Classe Principal que realiza a analise lexica 
- *
- */
 package AnalisadorLexico;
 
 import java.io.File;
@@ -14,10 +9,10 @@ public class GameControllerLanguage {
       gerarJavaLexer(GameControlLexer);
     }
     
-    public static void gerarJavaLexer(String GameControlLexer) {   //Gera a classe GameController
+    public static void gerarJavaLexer(String GameControlLexer) {   //Gera a classe GameController para realizar a analise lexica
         
-        File arquivo = new File(GameControlLexer);
-        JFlex.Main.generate(arquivo);
+        File arquivo = new File(GameControlLexer); // abre o arquivo Lexer.flex
+        JFlex.Main.generate(arquivo); //Gera a classe GameController.java
     }
     
 }

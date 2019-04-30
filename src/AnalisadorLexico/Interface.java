@@ -1,13 +1,18 @@
 package AnalisadorLexico;
 
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.io.StringReader;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 
 public class Interface extends javax.swing.JFrame {
@@ -18,19 +23,22 @@ public class Interface extends javax.swing.JFrame {
     int num_linha=1; 
       public void executar()throws Exception{
 
-       jText = jTextArea1;
+       jText = jTextArea1; //recebe o que foi digitado
        String expr;
-       expr = (String)jText.getText();
+       expr = (String)jText.getText();//Armazena o que foi digitado
         
-       AnalisadorLexico.GameController lexer = new AnalisadorLexico.GameController(new StringReader(expr));
+       AnalisadorLexico.GameController lexer = new AnalisadorLexico.GameController(new StringReader(expr)); 
+      // Cria um objeto da classe GameController. Faz a analise lexica. Retorna o tipo de token que foi inserido
        
        String resultado="";
+       String texto = jTextArea1.getText();
+       System.out.println(texto);
        
        while(true){
            Token token = lexer.yylex();   
            if(token == null){
               
-                jTextArea2.setText(resultado);
+                jTextArea2.setText(resultado);//Pega o resultado da analise lexica e joga para a outra area
                 return;
            }      
            System.out.println(token.toString());
@@ -38,7 +46,7 @@ public class Interface extends javax.swing.JFrame {
                num_linha++;
            }else{
            
-               switch(token){
+               switch(token){ //casos para exibir os tokens correspondentes
                    
                 case OPP:
                     resultado = resultado + "Linha: "+num_linha + ":" + "<OPP> "+ lexer.lexeme + "\n";
@@ -46,7 +54,7 @@ public class Interface extends javax.swing.JFrame {
                 case CLP:
                     resultado = resultado + "Linha: "+ num_linha + ":" + "<CLP>"+ lexer.lexeme + "\n";
                     break;
-                 case BR: 
+                case BR: 
                     num_linha++;
                     break;
                 case OPK:
@@ -64,20 +72,8 @@ public class Interface extends javax.swing.JFrame {
                 case END:
                     resultado = resultado + "Linha: " + num_linha + ":" + "<END>" + lexer.lexeme + "\n";
                     break;
-                case STR:
-                    resultado = resultado + "Linha: " + num_linha + ":" + "<STR> "+ lexer.lexeme + "\n";
-                    break;
-                case PF:
-                    resultado = resultado + "Linha: " +num_linha + ":" + " <PF>" + lexer.lexeme + "\n";
-                    break;
-                case PFD:
-                    resultado = resultado + "Linha: " +num_linha + ":" + "<PFD>" + lexer.lexeme +"\n";
-                    break;
-                case INT:
-                    resultado = resultado +"Linha: " + num_linha + ":" + "<INT>" + lexer.lexeme + "\n";
-                    break;
-                case CH:
-                    resultado = resultado + "Linha: " +num_linha + ":" + "<CH>" + lexer.lexeme + "\n";
+                case TIPODADO:
+                    resultado = resultado + "Linha: " +num_linha + ":" + " <TIPODADO>" + lexer.lexeme + "\n";
                     break;
                 case OPRELAC:
                     resultado = resultado + "Linha: "+ num_linha + ":" + "<OPRELAC>" + lexer.lexeme + "\n";
@@ -97,11 +93,8 @@ public class Interface extends javax.swing.JFrame {
                 case STOP:
                     resultado = resultado + "Linha: " +num_linha + ":" + " <STOP>" + lexer.lexeme +"\n";
                     break;
-                case IBC:
-                    resultado = resultado + "Linha: " +num_linha + ":" + "<IBC>"+ lexer.lexeme +"\n";
-                    break;
-                case FBC:
-                    resultado = resultado + "Linha: " +num_linha + "-" + "<FBC>" + lexer.lexeme + "\n";
+                case COMENTBL:
+                    resultado = resultado + "Linha: " +num_linha + ":" + "<COMENTBL>"+ lexer.lexeme +"\n";
                     break;
                 case COMENT:
                     resultado = resultado + "Linha: " +num_linha + "-" + "<COMENT> " + lexer.lexeme + "\n";
@@ -119,7 +112,7 @@ public class Interface extends javax.swing.JFrame {
                     resultado = resultado +"Linha: " + num_linha + "-" + "<ATRIB>" + lexer.lexeme + "\n";
                     break;   
                 case INICIO:
-                    resultado = resultado + "Linha: " +num_linha + "-" + "<INICIO> " + lexer.lexeme + "\n";
+                    resultado = resultado + "Linha: " + num_linha + "-" + "<INICIO> " + lexer.lexeme + "\n";
                     break;  
                  case SW:
                     resultado = resultado + "Linha: " +num_linha + "-" + "<SW> " + lexer.lexeme + "\n";
@@ -148,7 +141,9 @@ public class Interface extends javax.swing.JFrame {
                  case ERROR:
                     resultado = resultado + "Linha: " +num_linha + "-" + "Erro! Token não reconhecido." + lexer.yytext() + "\n";
                     break;
-           
+                 case FIM:
+                    resultado = resultado + "Linha: " +num_linha + "-" + "<FIM> " + lexer.lexeme + "\n";
+                    break;
            }
            }       
         }
@@ -156,7 +151,7 @@ public class Interface extends javax.swing.JFrame {
       
     public Interface() {
         initComponents();
-        setDefaultCloseOperation(javax.swing.WindowConstants.HIDE_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.HIDE_ON_CLOSE); //Fecha a JFrame
          
     }
        
@@ -184,6 +179,7 @@ public class Interface extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         botao = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
+        Salvar = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu6 = new javax.swing.JMenu();
         jMenuItem2 = new javax.swing.JMenuItem();
@@ -204,6 +200,7 @@ public class Interface extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Game Controller");
 
+        jPanel1.setBackground(new java.awt.Color(204, 204, 255));
         jPanel1.setForeground(new java.awt.Color(60, 63, 65));
 
         jTextArea1.setColumns(20);
@@ -241,30 +238,41 @@ public class Interface extends javax.swing.JFrame {
             }
         });
 
+        Salvar.setBackground(new java.awt.Color(255, 255, 255));
+        Salvar.setFont(new java.awt.Font("Comic Sans MS", 0, 11)); // NOI18N
+        Salvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/AnaliseLexicaImagens/save icon.png"))); // NOI18N
+        Salvar.setText("Salvar");
+        Salvar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                SalvarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(99, 99, 99)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(249, 249, 249)
-                .addComponent(jLabel2)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 396, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 387, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(377, 377, 377))
+            .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(64, 64, 64)
+                        .addGap(99, 99, 99)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(249, 249, 249)
+                        .addComponent(jLabel2))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
                         .addComponent(botao, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 396, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 387, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(377, 377, 377))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(Salvar, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -278,15 +286,16 @@ public class Interface extends javax.swing.JFrame {
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 511, Short.MAX_VALUE)
                     .addComponent(jScrollPane1))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(botao, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(24, Short.MAX_VALUE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(Salvar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 49, Short.MAX_VALUE)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(botao, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(24, 24, 24))
         );
 
         jMenu6.setText("Arquivo");
 
-        jMenuItem2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/AnaliseLexicaImagens/Open-icon.png"))); // NOI18N
         jMenuItem2.setText("Abrir Arquivo");
         jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -295,7 +304,6 @@ public class Interface extends javax.swing.JFrame {
         });
         jMenu6.add(jMenuItem2);
 
-        jMenuItem3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/AnaliseLexicaImagens/sair.png"))); // NOI18N
         jMenuItem3.setText("Sair");
         jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -328,22 +336,30 @@ public class Interface extends javax.swing.JFrame {
 
     
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
-        JFileChooser fileChooser = new JFileChooser();
-        int returnVal = fileChooser.showOpenDialog(this);
-        if (returnVal == JFileChooser.APPROVE_OPTION) {
-            file = fileChooser.getSelectedFile();
-            try {
-              jTextArea1.read( new FileReader( file.getAbsolutePath() ), null ); 
-               jTextArea2.setText("");
-            } catch (IOException ex) {
-              JOptionPane.showMessageDialog(null, "Problema ao acessar o arquivo: "+file.getAbsolutePath(), "Erro", JOptionPane.ERROR_MESSAGE); 
-            }
-        } else {
-        }
+            //Menu Abrir Arquivo
+        JFileChooser fileChooser = new JFileChooser();          
+       
+       fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY); //abre somente arquivos
+       FileNameExtensionFilter filter = new FileNameExtensionFilter("GAME Script (*.txt)", "txt");
+       fileChooser.setFileFilter(filter);
+        int returnVal = fileChooser.showOpenDialog(this);   
+        
+       if (returnVal == JFileChooser.APPROVE_OPTION) { //se clicou em abrir
+           file = fileChooser.getSelectedFile(); //seleciona o arquivo escolhido
+             
+           try {
+             jTextArea1.read( new FileReader( file.getAbsolutePath() ), null ); //pega o endereço do arquivo escolhido
+             jTextArea2.setText("");
+           } catch (IOException ex) {
+                JOptionPane.showMessageDialog(null, "Problema ao acessar o arquivo: "+file.getAbsolutePath(), "Erro", JOptionPane.ERROR_MESSAGE); 
+             }
+        }else {
+          }
      
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+            //Menu Sair
         JPanel panel = new JPanel();  
         panel.setLayout(null);  
         Object source;  
@@ -352,20 +368,21 @@ public class Interface extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        jTextArea2.setText("");
-        jTextArea1.setText("");
+             //Botão Limpar 
+        jTextArea2.setText("");  
+        jTextArea1.setText(""); 
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void botaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoActionPerformed
-
+            //botao Analisar
         try{
-            executar();
+            executar(); //chama o metodo executar
             var = 0;
             num_linha=1;
             if(file != null){
 
-                PrintStream ps = new PrintStream(file.getAbsolutePath());
-                ps.println(jText.getText());
+                PrintStream ps = new PrintStream(file.getAbsolutePath()); 
+                ps.println(jText.getText()); //imprimi na area o resultado
                 ps.close();
             }
 
@@ -375,10 +392,46 @@ public class Interface extends javax.swing.JFrame {
 
     }//GEN-LAST:event_botaoActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-   
+    private void SalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SalvarActionPerformed
+
+        try {
+            // TODO add your handling code here:
+            salvaTela();
+        } catch (IOException ex) {
+            Logger.getLogger(Interface.class.getName()).log(Level.SEVERE, null, ex);
+        }
+       
+    }//GEN-LAST:event_SalvarActionPerformed
+    public void salvaTela() throws IOException{
+      FileNameExtensionFilter extensionFilter = new FileNameExtensionFilter("Game Script" , "txt");
+        final JFileChooser saveAsFileChooser = new JFileChooser();
+        saveAsFileChooser.setApproveButtonText("Salvar");
+        saveAsFileChooser.setFileFilter(extensionFilter);
+        int actionDialog = saveAsFileChooser.showOpenDialog(this);
+        if (actionDialog != JFileChooser.APPROVE_OPTION){
+            return;
+        }
+        File arq =saveAsFileChooser.getSelectedFile();
+        if (!arq.getName().endsWith(".txt"));{
+            arq = new File(arq.getAbsolutePath()+ ".txt");
+        
+        }
+        BufferedWriter outFile = null;
+        try{
+            outFile = new BufferedWriter(new FileWriter(arq));
+            jTextArea1.write(outFile);
+            
+        }catch (IOException ex){
+            ex.printStackTrace();
+        }finally{
+            if (outFile != null){
+                try{
+                    outFile.close();
+                } catch (IOException e){}
+            }
+        
+        }
+    }
  
       public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -414,6 +467,7 @@ public class Interface extends javax.swing.JFrame {
    
      
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton Salvar;
     private javax.swing.JButton botao;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
