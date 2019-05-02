@@ -28,7 +28,7 @@ public String lexeme;
 (";")  {lexeme = yytext(); return END;}                                       /* Final de linha*/
 ("\"") {lexeme = yytext(); return ASP;}                                      /* Aspas*/
 (":")  {lexeme = yytext(); return DOISP;}                                     /* Dois pontos*/
-("float" | ("double") | ("int") |("char")) {lexeme = yytext(); return TIPODADO;}   /* Conjunto de dados*/
+("float" | "double" | "int" | "char") {lexeme = yytext(); return TIPODADO;}   /* Conjunto de dados*/
 (">=" | "<=" |"==" |"!=" |"<" | ">") {lexeme = yytext(); return OPRELAC;}    /* Operadores Relacionais*/
 ("+" | "-" | "/" | "*") {lexeme = yytext(); return OPARIT;}                  /* Operadores Aritméticos*/
 ("||" | "!" | "&&") {lexeme = yytext(); return OPLOG;}                       /* Operadores Lógicos*/

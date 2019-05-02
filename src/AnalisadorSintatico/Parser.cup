@@ -1,0 +1,24 @@
+package AnalisadorSintatico;
+
+import java.io.*;
+import java.lang.*;
+import java_cup.runtime.*;
+import java_cup.runtime.Symbol;
+import java.utilArrayList;
+import java.util;
+import AnalisadorSintatico.Yylex;
+
+parser code
+{:
+	public static void main (String args[]) throws Exception{
+		//new parser(new Yylex(new FileInputStream(args[0]))).parse();
+		new parser(new Yylex(System.in)).parse();
+	}
+	
+	public void syntax_error(Symbol s){
+		report_error("Error de sintaxis. Linha: " +(s.right + 1) +
+		"Coluna: " + s.left + ". Texto: \"" + s.value + "\"", null);
+       // public static void carregar(String arquivo) throws Exception{
+       // new parser(new Yylex(new FileInputStream(arquivo))).parse();
+        }
+:};
